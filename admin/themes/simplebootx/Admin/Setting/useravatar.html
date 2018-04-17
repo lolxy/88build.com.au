@@ -1,0 +1,119 @@
+<admintpl file="header" />
+<style type="text/css">
+.tab-content{overflow: visible;}
+.tab-pane{width: 210px;height: 265px;padding: 15px;border: 1px solid #eeeeee;position:relative;}
+.headicon{width: 210px;height: 210px;margin-bottom: 15px;}
+.uploadbtn{border-top: 1px solid #eeeeee;height: 55px;position:absolute;left: 0;bottom: 0;width: 100%;}
+#avatar_uploder{position:absolute;bottom: 0;left: 0;z-index:5;height: 55px;width: 100%;outline: none;opacity: 0;cursor: pointer}
+.uploadbtn span{display:block;height:36px;border: 1px solid #3879D9; color:#3879D9;border-radius:3px;margin:8px 30px;text-align: center;line-height: 36px;cursor: pointer}
+.uploaded_avatar_area{
+	margin-top: 20px;
+}
+.uploaded_avatar_btns{
+	margin-top: 20px;
+}
+.btnbox:hover .uploadbtn span{background:#3879D9;color:#ffffff;}
+.uploaded_avatar_area .uploaded_avatar_btns{display: none;}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('User/adminuserinfo',array('id'=>$id))}">基本资料</a></li>
+			<li class="active"><a href="{:U('setting/useravatar',array('id'=>$id))}">上传头像</a></li>
+			<li><a href="{:U('setting/userpassword',array('id'=>$id))}">{:L('ADMIN_SETTING_PASSWORD')}</a></li>
+		</ul>
+        
+        <div class="tab-pane active" id="one">
+            <if condition="empty($avatar)">
+                <img src="__PUBLIC__/images/headicon.png" class="headicon"/>
+            <else/>
+                <img src="{:sp_get_user_avatar_url($avatar)}?t={:time()}" class="headicon"/>
+            </if>
+            <div class="btnbox">
+                <input type="file" onchange="avatar_upload(this)" id="avatar_uploder"  name="file"/>
+                <div class="uploadbtn"><span>上传头像</span></div>
+            </div>
+            
+        </div>
+        
+        <div class="uploaded_avatar_area">
+            
+            <div class="uploaded_avatar_btns">
+                <a class="btn btn-primary confirm_avatar_btn" onclick="update_avatar()">确定</a>
+                <a class="btn" onclick="reloadPage()">取消</a>
+            </div>
+        </div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+	function update_avatar(){
+		var area=$(".uploaded_avatar_area img").data("area");
+		var id={$id};
+		var ids={'id':id};
+		var json = $.extend({}, area, ids);
+		console.log(json);
+		$.post("{:U('admin/setting/user_avatar_update')}",json,function(data){
+				console.log(json);
+			if(data.status==1){
+				reloadPage(window);
+			}
+		},"json");
+		
+	}
+	function avatar_upload(obj){
+		var $fileinput=$(obj);
+		Wind.css("jcrop");
+		Wind.use("ajaxfileupload","jcrop","noty",function(){
+			$.ajaxFileUpload({
+				url:"{:U('admin/setting/avatar_upload')}",
+				secureuri:false,
+				fileElementId:"avatar_uploder",
+				dataType: 'json',
+				data:{},
+				success: function (data, status){
+					if(data.status==1){
+						$("#avatar_uploder").hide();
+						var $uploaded_area=$(".uploaded_avatar_area");
+						$uploaded_area.find("img").remove();
+						var src= "__UPLOAD__avatar/"+data.data.file;
+						var $img=$("<img/>").attr("src",src);
+						$img.prependTo($uploaded_area);
+						$(".uploaded_avatar_btns").show();
+						var img = new Image();
+						img.src=src;
+						
+						var callback=function(){
+							console.log(img.width);
+							$img.Jcrop({
+						    	aspectRatio:1,
+						    	trueSize: [img.width,img.height],
+						    	setSelect: [ 0, 0, 100, 100 ],
+						    	onSelect: function(c){
+						    		$img.data("area",c);
+						    	}
+						    });
+						}
+						
+						if(img.complete){
+							callback();
+						}else{
+							img.onload=callback;
+						}
+						
+					}else{
+						noty({text: data.info,
+                    		type:'error',
+                    		layout:'center'
+                    	});
+					}
+					
+				},
+				error: function (data, status, e){}
+			});
+		});
+		return false;
+	}
+</script>
+</body>
+</html>

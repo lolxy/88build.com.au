@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$name} {$seo_title} {$site_name}</title>
+<meta name="keywords" content="{$seo_keywords}" />
+<meta name="description" content="{$seo_description}">
+<tc_include file="Public:head" />
+</head>
+<body>
+	<tc_include file="Public:nav" />
+	<div class="wrapper container" style="border-radius:0;">
+		<div class="list-title"><span>{$name}</span>的全部工程案例</div>
+		<php> 
+			$lists = sp_sql_posts_paged("field:posts_id,smeta,post_title,post_hits;order:istop DESC,recommended DESC,post_date DESC;where:post_author=$user_id and post_type=1",20);</php>
+			<empty name="lists['posts']">
+				<div class="emptybox">该师傅还没有发布工程案例！</div>
+			<else/>
+		<div id="container" style="border:1px solid #eeeeee;border-top:none;min-height:406px;">
+			<volist name="lists['posts']" id="vo">
+			<php>
+			$smeta=json_decode($vo['smeta'], true);
+			</php>
+
+			<div class="item">
+				<div class="tc-gridbox">
+					<div class="tc-libox">
+						<div class="item-image">
+							<a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$user_id))}">
+						<if condition="!empty($smeta['thumb'])">
+							<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive" alt="{$vo.post_title}">
+						<else/>
+							<img src="__PUBLIC__/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}">
+						</if>
+							</a>
+						</div>
+						<div class="titbox">
+							<a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$user_id))}" class="title">{$vo.post_title}</a>
+							<a href="javascript:;" class="viewhits"><i class="fa fa-eye"></i><span>{$vo.post_hits}</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</volist>
+		</div>
+		<!-- <div class="pagination"><ul>{$lists['page']}</ul></div> -->
+		<div class="js-infinite-scroll-loading text-center" style="display: none;">正在加载...</div>
+		<div id="nextpage"></div>
+		</empty>
+	</div>
+<tc_include file="Public:footer" />
+	<!-- JavaScript -->
+	<tc_include file="Public:scripts" />
+	<script src="__TMPL__Public/assets/js/imagesloaded.pkgd.min.js"></script>
+	<script src="__TMPL__Public/assets/js/masonry.pkgd.min.js"></script>
+	<script src="__TMPL__Public/assets/js/jquery.infiniteScroll.js"></script>
+	<script>
+		
+		$(function(){
+			var $container= $('#container').masonry({
+				itemSelector : '.item'
+			});
+			
+			$container.imagesLoaded().progress(function (imgLoad, image) {
+				var msnry = $container.data('masonry');
+				var itemSelector = msnry.options.itemSelector;
+		        var $item = $(image.img).parents(itemSelector);
+		        $('.tc-gridbox',$item).css('opacity',1);
+		        msnry.layout();
+		    });
+			
+			$('#nextpage').infiniteScroll({
+				loading:'.js-infinite-scroll-loading',
+				total_pages:{$lists['total_pages']},
+				success:function(content){
+					var $items=$(content).find('#container .item');
+					if($items.length>0){
+						//$('.tc-gridbox',$items).css('opacity',1);
+						$container.append( $items )
+					    // add and layout newly prepended items
+					    .masonry( 'appended', $items );
+						$items.imagesLoaded().progress(function (imgLoad, image) {
+							var msnry = $container.data('masonry');
+							var itemSelector = msnry.options.itemSelector;
+					        var $item = $(image.img).parents(itemSelector);
+					        $('.tc-gridbox',$item).css('opacity',1);
+					        msnry.layout();
+					    });
+					}
+				},
+				finish:function(){
+					
+				}
+			});
+		});
+		
+		
+		
+		
+	</script>
+</body>
+</html>

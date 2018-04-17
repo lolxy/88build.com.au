@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="88BUILD">
+<tc_include file="Public:head" />
+		<style>
+			body{background-color:#f8f8f8;}
+			.loginboxs{padding: 10px;}
+			.loginboxs input.sts{border: 1px solid #eeeeee;width: 100%;height:36px;box-sizing:border-box;}
+			.loginboxs textarea,.loginboxs select{border: 1px solid #eeeeee;width:100%;box-sizing:border-box;}
+			
+			.tab-content a{display:block;margin-bottom: 10px;}
+		</style>
+	</head>
+<body>
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>绑定账号</h2>
+</div>
+		<div class="container loginboxs">
+           <div class="tabs">
+               <div class="tab-content">
+                   <div class="tab-pane active" id="one">
+                       <if condition="!empty($oauths['qq'])">
+                            <button class="btn"><i class="fa fa-qq"></i> 已绑定腾讯QQ账号</button>
+                       <else/>
+                            <a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'qq'))}"><i class="fa fa-qq"></i> 绑定腾讯QQ账号</a>
+                       </if>
+                       <if condition="!empty($oauths['sina'])">
+                            <button class="btn"><i class="fa fa-weibo"></i> 已绑定新浪微博账号</button>
+                       <else/>
+                            <a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'sina'))}"><i class="fa fa-weibo"></i> 绑定新浪微博账号</a>
+                       </if>
+                       <if condition="!empty($oauths['weixin'])">
+                            <button class="btn"><i class="fa fa-weixin"></i> 已绑定微信账号</button>
+                       <else/>
+                            <a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'weixin'))}"><i class="fa fa-weixin"></i> 绑定微信账号</a>
+                       </if>
+                   </div>
+               </div>							
+           </div>
+	</div>
+	<!-- /container -->
+<tc_include file="Public:subnav" />
+	<tc_include file="Public:scripts" />
+</body>
+</html>

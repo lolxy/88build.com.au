@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>搜索 {$site_name} </title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="">
+		<tc_include file="Public:head" />
+	</head>
+<body style="background-color:#fefefe;">
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>搜索-{$keyword}</h2>
+</div>
+	<div class="container">
+		<php>
+			$result=sp_sql_posts_paged_bykeyword($keyword,"field:posts.id,post_type,post_title,smeta,posts_id;limit:0,20;order:listorder desc,post_date desc",20);
+		</php>
+		<if condition="$result['count'] neq 0">
+        <div class="list-title" style="margin:0px;"><span>'{$keyword}'</span> 的案例或经验搜索结果（{$result['count']}条记录）</div>
+        </if>
+			<empty name="result['posts']">
+				<div class="emptybox">没有搜索到对应关键字的经验或案例信息！</div>
+			<else/>
+		<div id="container" style="overflow:hidden;padding:5px 3px">
+			<volist name="result['posts']" id="vo" key="ks">
+			<php>
+			$smeta=json_decode($vo['smeta'], true);
+            $catid[$ks] = M('TermRelationships')->where("posts_id =".$vo['posts_id'])->getField('term_id');
+			</php>
+
+			<div class="item">
+				<div class="tc-gridbox">
+					<div class="tc-libox">
+						<div class="item-image">
+							<if condition="$vo['post_type'] eq 3">
+                            <a href="{:leuu('portal/experience/index',array('id'=>$vo['posts_id'],'cid'=>$catid[$ks]))}">
+                            <else/>
+                            <a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$vo['id']))}">
+                            </if>
+						<if condition="!empty($smeta['thumb'])">
+							<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive" alt="{$vo.post_title}">
+						<else/>
+							<img src="__PUBLIC__/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}">
+						</if>
+							</a>
+						</div>
+						<div class="titbox">
+                        	<if condition="$vo['post_type'] eq 3">
+                            <a href="{:leuu('portal/experience/index',array('id'=>$vo['posts_id'],'cid'=>$catid[$ks]))}" class="title">{$vo.post_title}</a>
+                            <else/>
+                            <a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$vo['id']))}" class="title">{$vo.post_title}</a>
+                            </if>
+							<a href="javascript:;" class="viewhits"><i class="fa fa-eye"></i><span>{$vo.post_hits}</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</volist>
+		</div>
+		<!-- <div class="pagination"><ul>{$lists['page']}</ul></div> -->
+		<div class="js-infinite-scroll-loading text-center" style="display: none;">正在加载...</div>
+		<div id="nextpage"></div>
+		</empty>
+	</div>
+    
+    <div class="container">
+		<if condition="$counts neq 0">
+        <div class="list-title" style="margin:0px;border-top:1px solid #eeeeee"><span>'{$keyword}'</span> 的用户搜索结果（{$counts}条记录）</div>
+        </if>
+			<empty name="searchresult">
+				<div class="emptybox">没有搜索到对应关键字的经验或案例信息！</div>
+			<else/>
+		<div id="container" style="overflow:hidden;padding:5px 3px">
+			<volist name="searchresult" id="vos">
+			<div class="item">
+				<div class="tc-gridbox">
+					<div class="tc-libox">
+						<div class="item-image">
+						<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+						<if condition="empty($vos['avatar'])">
+                            <img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+                        <else/>
+                            <img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+                        </if>
+							</a>
+						</div>
+						<div class="titbox">
+                            <a href="{:leuu('user/info/index',array('id'=>$vos['id']))}" class="title" style="margin-right:0;">{$vos.user_nicename}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</volist>
+		</div>
+		<!-- <div class="pagination"><ul>{$lists['page']}</ul></div> -->
+		<div class="js-infinite-scroll-loading text-center" style="display: none;">正在加载...</div>
+		<div id="nextpage"></div>
+		</empty>
+	</div>
+	<!-- JavaScript -->
+	<tc_include file="Public:scripts" />
+	<script src="__TMPL__Public/assets/js/imagesloaded.pkgd.min.js"></script>
+</body>
+</html>

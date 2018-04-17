@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="">
+<tc_include file="Public:head" />
+</head>
+
+<body class="body-white">
+	<tc_include file="Public:nav" />
+
+	<div class="container tc-main wrapper">
+		<div class="row">
+			<div class="span4 offset4">
+				<h2 class="text-center">完善第三方登录用户资料</h2>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="email">
+						<form class="form-horizontal js-ajax-form" action="{:U('user/register/do_perfect')}" method="post">
+							
+                            <div class="control-group">
+								<input type="text" name="user_login" placeholder="用户名" class="span4" value="">
+							</div>
+                            
+							<div class="control-group">
+								<input type="text" name="email" placeholder="邮箱" class="span4">
+							</div>
+
+							<div class="control-group">
+								<label for="usertype1" class="radio inline">
+									<input type="radio" name="user_type" value="2" id="usertype1"/>普通会员
+								</label>
+								<label for="usertype2" class="radio inline">
+									<input type="radio" name="user_type" value="3" id="usertype2" checked/>装修师傅
+								</label>
+							</div>
+		
+							<div class="control-group">
+								<input type="password" name="password" placeholder="密码" class="span4">
+							</div>
+							
+							<div class="control-group">
+								<input type="password" name="repassword" placeholder="重复密码" class="span4">
+							</div>
+		
+							<div class="control-group">
+								<div class="span4" style="margin-left: 0px;">
+									<input type="text" name="verify" placeholder="验证码" style="width:250px;">
+									{:sp_verifycode_img('length=4&font_size=14&width=100&height=34&charset=1234567890&use_noise=1&use_curve=0')}
+								</div>
+								
+							</div>
+		
+							<div class="control-group">
+								<button class="btn btn-primary js-ajax-submit span4" type="submit" data-wait="1500" style="margin-left: 0px;">完善资料</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+</body>
+</html>

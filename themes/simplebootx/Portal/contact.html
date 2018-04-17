@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>联系我们 {$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<tc_include file="Public:head" />
+</head>
+
+<php>
+$contact_us_ads=sp_getslide("contact_us_ads");
+</php>
+
+<body class="body-white">
+	<tc_include file="Public:nav" />
+    <notempty name="contact_us_ads">
+    <div class="contatcimg" style="text-align:center;background:#DBE3EE">
+        <foreach name="contact_us_ads" item="vo" key="k">
+        	<if condition="$k eq 0">
+            <img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt="" class="img-responsive"/>
+            </if>
+    	</foreach>
+    </div>
+    </notempty>
+	<div class="container" style="padding:20px 0">
+		<div class="row">
+			<div class="span6">
+				<h3 class="section-title">建议反馈</h3>
+				<form class="form-light js-ajax-form" role="form" method="post"
+					action="{:U('api/guestbook/addmsg')}">
+					<div class="row">
+						<div class="span3">
+							<div class="form-group">
+								<label>姓名</label> <input type="text" class="span3" placeholder="Your name" name="full_name">
+							</div>
+						</div>
+						<div class="span3">
+							<div class="form-group">
+								<label>邮箱</label> <input type="email" class="span3" placeholder="Email address" name="email">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>内容</label>
+						<textarea class="span6" id="message" placeholder="Write you message here..." style="height: 100px;" name="msg"></textarea>
+					</div>
+
+					<div class="row">
+						<div class="span3">
+							<div class="form-group">
+								<label>验证码</label> <input type="text" class="span3" placeholder="please enter the code" name="verify" autocomplete="off">
+							</div>
+						</div>
+						<div class="span3">
+							<div class="form-group">
+								<label>&nbsp;</label>
+								{:sp_verifycode_img('length=4&font_size=16&width=150&height=34&use_noise=1&use_curve=0','style="cursor:pointer;vertical-align: top;" title="点击获取"')}
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary js-ajax-submit" data-wait="1500">发送留言</button>
+				</form>
+			</div>
+			<div class="span6">
+				<div class="row">
+					<div class="span3">
+						<h3 class="section-title">联系方式</h3>
+						<div class="contact-info">
+							<h5>地址</h5>
+							<p>{:sp_getad('address')}</p>
+
+							<h5>邮箱</h5>
+							<p>{$site_admin_email}</p>
+
+							<h5>电话</h5>
+							<p>{:sp_getad('tell')}</p>
+						</div>
+					</div>
+					<div class="span3">
+						<h3>Contact</h3>
+						<div class="contact-info">
+							<h5>Address</h5>
+							<p>{:sp_getad('address_en')}</p>
+
+							<h5>Email</h5>
+							<p>{$site_admin_email}</p>
+
+							<h5>Phone</h5>
+							<p>{:sp_getad('phone')}</p>
+						</div>
+					</div>
+				</div>
+				<h3 class="section-title">扫一扫，微信二维码</h3>
+				<div class="social-media">
+                	<img src="{:sp_get_image_url($site_erweima)}" alt="" style="width:120px;height:120px;">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+    <tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+
+</body>
+</html>

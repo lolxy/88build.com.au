@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="88BUILD">
+<tc_include file="Public:head" />
+<style>
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+.span9{background-color: #fff;margin-bottom: 20px;border: 1px solid #eeeeee;box-sizing:border-box}
+.control-group{margin-top: 10px;border-top: 1px solid #eeeeee;text-align: center;padding: 15px;}
+.control-group .btn{width: 150px;height:24px;line-height: 24px;}
+</style>
+</head>
+<body class="body-white" id="top">
+	<tc_include file="Public:nav" />
+		<div class="container tc-main">
+                <div class="row">
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                    <div class="span9">
+                    
+                    <notempty name="term">
+<div class="category maininfo" style="background:#e2e2e2;">
+   <div class="pull-left">
+        <php>
+            $age = empty($birthday)?"未知":getAge($birthday);
+        </php>
+        <span class="realname">{$user_nicename|default='未填写'}</span><em>(
+        <php>$sexs=array("0"=>"保密","1"=>"男","2"=>"女");</php>
+        {$sexs[$sex]} <b>{$age}</b>岁)</em>
+   </div>
+   <div class="pull-right">
+   	<if condition="$user_type eq 3">
+        <div class="user_type">
+        装修师傅
+        </div>
+    </if>
+    <if condition="$user_type eq 2">
+        <div class="user_type">
+        普通会员
+        </div>
+    </if>
+   </div>   
+</div>
+</notempty>
+<div class="wrapper-box">
+	<div class="box">
+		<div class="picbox">
+			<if condition="empty($avatar)">
+				<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+				<else/>
+				<img src="{:sp_get_user_avatar_url($avatar)}" class="img-responsive"/>
+			</if>
+		</div>
+		<div class="userbox">
+			<p><span>{$mobile|default='未填写'}</span></p>
+			<dl>
+				<dt>
+					从业年限：
+				</dt>
+				<dd>
+					<php>
+						$year = (date($work_time)==date("0000-00-00"))?"--":getAge($work_time)-1;
+						$riqi = (date($work_time)==date("0000-00-00"))?"--":date('Y年m月',strtotime($work_time));
+					</php>
+					{$riqi}至今 ( <span class="nianfen">{$year}</span> 年)
+				</dd>
+			</dl>
+            <dl>
+            	<dt>
+                	所属分类：
+                </dt>
+                <dd>
+                    <foreach name="term" item="vo" key="k">
+                        <if condition="$k gt 0"> -</if>
+                        <span><a href="{:leuu('portal/categorylist/index',array('cid'=>$vo['term_id']))}" target="_blank">{$vo.name}</a></span>
+                    </foreach>
+                </dd>
+            </dl>
+			<dl>
+				<dt>
+					工作内容：
+				</dt>
+				<dd>
+					{$work_content|default='未填写'}
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					服务区域：
+				</dt>
+				<dd>
+					{$service_area|default='未填写'}
+				</dd>
+			</dl>
+		</div>
+	</div>
+</div>
+
+<div class="clearfix"></div>
+<div class="control-group">
+        <div class="controls">
+            <a href="{:U('user/profile/edit')}" type="submit" class="btn btn-primary">编辑</a>
+        </div>
+    </div>
+
+        </div>
+    </div>
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:scripts" />
+</body>
+</html>

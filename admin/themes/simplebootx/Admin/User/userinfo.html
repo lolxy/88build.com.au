@@ -1,0 +1,106 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('User/userinfo')}">基本资料</a></li>
+			<li><a href="{:U('setting/avatar')}">上传头像</a></li>
+			<li><a href="{:U('setting/password')}">{:L('ADMIN_SETTING_PASSWORD')}</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" method="post" action="{:U('User/userinfo_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label" for="input-user_nicename"><span class="form-required">*</span>姓名</label>
+					<div class="controls">
+						<input type="hidden" name="id" value="{$id}">
+						<input type="hidden" name="user_type" value="{$user_type}">
+						<input type="text" id="input-user_nicename" name="user_nicename" value="{$user_nicename}" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input-gender">{:L('GENDER')}</label>
+					<div class="controls">
+						<select name="sex" id="input-gender">
+							<php>$sexs=array("0"=>L('GENDER_SECRECY'),"1"=>L('MALE'),"2"=>L('FEMALE'));</php>
+							<foreach name="sexs" item="vo">
+								<php>$sexselected=$key==$sex?"selected":"";</php>
+								<option value="{$key}"{$sexselected}>{$vo}</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+
+				<!--装修是否所属分类-->
+				<if condition="$user_type eq 3">
+				<div class="control-group">
+					<label class="control-label" for="input-gender">所属分类</label>
+					<div class="controls">
+						<select multiple="multiple" style="max-height: 100px;" name="term[]">{$taxonomys}</select>
+						<div>windows：按住 Ctrl 按钮来选择多个选项,Mac：按住 command 按钮来选择多个选项</div>
+					</div>
+				</div>
+				</if>
+				<!--//装修是否所属分类-->
+
+				<div class="control-group">
+					<label class="control-label" for="input-birthday"><span class="form-required">*</span>{:L('BIRTHDAY')}</label>
+					<div class="controls">
+						<input class="js-date" type="text" id="input-birthday" placeholder="请选择您的出生日期" name="birthday" value="{$birthday}" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input-mobile"><span class="form-required">*</span>手机号码</label>
+					<div class="controls">
+						<input type="text" id="input-mobile" placeholder="请输入手机号码" name="mobile" value="{$mobile}" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input-signature">个人简介</label>
+					<div class="controls">
+						<textarea id="input-signature" placeholder="请填写个人简介" name="signature" cols="30" rows="4">{$signature}</textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="input-worktime">从业年限</label>
+					<div class="controls">
+						<input type="text" id="input-worktime" placeholder="请填写您的从业日期" name="work_time" value="{$work_time}">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="input-workcontent">工作内容</label>
+					<div class="controls">
+						<textarea id="input-workcontent" placeholder="请填写工作内容" name="work_content" cols="30" rows="4">{$work_content}</textarea>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="input-servicearea">服务区域</label>
+					<div class="controls">
+
+						<php>
+                        $arr=['全墨尔本范围','box hill及周边地区','burwood及周边地区','ciayton及周边地区','kew balwyn及周边地区','preston bundoora及周边地区','footscray及周边地区','city及周边地区','point cook及周边地区'];
+                        $selectArr=explode(",",$services);
+                        </php>
+						<select multiple="multiple" style="max-height: 100px;" name="services[]">
+                        	<foreach name="arr" item="vo" key="k">
+                            	<option value="{$vo}" <if condition="in_array($vo,$selectArr)">selected</if>>{$vo}<if condition="$k==0">（建议选择）</if></option>
+                            </foreach>
+                        </select>
+                        <div style="margin:10px auto">请选择您的服务区域，如上方没有您的可选项，请在下面填写更多服务区域</div>
+                     </div>
+                     <div class="controls">
+						<textarea id="input-servicearea" placeholder="请填写更多服务区域" name="service_area" cols="30" rows="4">{$service_area}</textarea>
+					</div>
+				</div>
+ 
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>{$post_title} {$site_name} </title>
+		<meta name="keywords" content="{$post_keywords}" />
+		<meta name="description" content="{$post_excerpt}">
+		<tc_include file="Public:head" />
+		<style>
+			#article_content img{height:auto !important}
+			#article_content {word-wrap: break-word;}
+    		.btn {margin-top: 33px;}
+			body{background-color:#f8f8f8;padding-bottom: 0;}
+		</style>
+	</head>
+<body>
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>{$post_title}</h2>
+</div>
+<div class="container jingyanbox">
+			
+			<div class="tc-box first-box article-box">
+		    	<h2 style="text-align:center">{$post_title}</h2>
+		    	<div class="article-infobox">
+		    		<span>{$post_date}  作者:{$user_nicename|default=$user_login}</span>
+		    		<span>
+		    			<a href="javascript:;"><i class="fa fa-eye"></i><span>{$post_hits}</span></a>
+						<a href="{:U('experience/do_like',array('id'=>$article_id))}" class="js-count-btn"><i class="fa fa-thumbs-up"></i><span class="count">{$post_like}</span></a>
+					</span>
+		    	</div>
+		    	<div id="article_content">
+		    	{$post_content}
+		    	</div>
+                <if condition="!empty($post_source)">
+                    <div>
+                        <b>注：本文转载自{$post_source}，转载目的在于传递更多信息，并不代表本网赞同其观点和对其真实性负责。如有侵权行为，请联系我们，我们会及时删除。</b>
+                    </div>
+    			</if>
+		    	<div>
+					<if condition="!empty($prev)">
+					<a href="{:leuu('experience/index',array('id'=>$prev['posts_id'],'cid'=>$prev['term_id']))}" class="btn btn-primary pull-left">上一篇</a>
+					</if>
+					<if condition="!empty($next)">
+					<a href="{:leuu('experience/index',array('id'=>$next['posts_id'],'cid'=>$next['term_id']))}" class="btn btn-warning pull-right">下一篇</a>
+					</if>
+					<div class="clearfix"></div>
+				</div>
+		    	
+		    </div>
+        
+    <notempty name="term">
+	<div class="category">
+		所属分类：
+		<foreach name="term" item="vo" key="k">
+			<if condition="$k gt 0"> -</if>
+			<span><a href="{:leuu('portal/experiencelist/index',array('cid'=>$vo['term_id']))}" target="_blank">{$vo.name}</a></span>
+		</foreach>
+	</div>
+	</notempty>
+    
+        	<div class="tc-box">
+	        	<div class="headtitle">
+	        		<h2>热门经验</h2>
+	        	</div>
+	        	<div class="ranking">
+	        		<php>
+						$hot_articles=sp_sql_posts("field:post_title,post_excerpt,posts_id,smeta;order:post_hits desc;where:post_type=3;limit:5;"); 
+					</php>
+		        	<ul class="unstyled">
+		        		<foreach name="hot_articles" item="vo" key="ks">
+                        	<php>
+                            $catid[$ks] = M('TermRelationships')->where("posts_id =".$vo['posts_id'])->getField('term_id');
+                            $top=$key<3?"top3":"";
+                            </php>
+							<li class="{$top}"><i>{$key+1}</i><a title="{$vo.post_title}" href="{:leuu('experience/index',array('id'=>$vo['posts_id'],'cid'=>$catid[$ks]))}">{$vo.post_title}</a></li>
+						</foreach>
+					</ul>
+				</div>
+	</div>
+    
+    <div class="clearfix"></div>
+    
+     {:hook('comment',array(
+		    		'post_id'=>$article_id,
+		    		'post_table'=>'posts',
+		    		'post_title'=>$post_title
+		    	))}
+              
+</div>
+<tc_include file="Public:scripts"/>
+</body>
+</html>

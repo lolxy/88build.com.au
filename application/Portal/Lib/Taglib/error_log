@@ -1,0 +1,1 @@
+[09-Aug-2017 23:05:36 UTC] PHP Fatal error:  Class 'Think\Template\TagLib' not found in /home/eleccoma/www.88build.com.au/application/Portal/Lib/Taglib/Portal.class.php on line 11

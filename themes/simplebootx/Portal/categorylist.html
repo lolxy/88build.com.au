@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$name} {$seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+    <tc_include file="Public:head" />
+</head>
+<body>
+<tc_include file="Public:nav" />
+
+<div class="wrapper container" style="border-radius:0;padding:0px;">
+	<div class="row-fluid">
+		<div class="slidebox span3">
+			<div class="accordion" id="accordion2">
+				<foreach name="term" item="vo">
+					<php>
+						$term_child=sp_get_child_terms($vo['term_id']);
+					</php>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a href="{:leuu('portal/categorylist/index',array('cid'=>$vo['term_id']))}" <if condition="$vo['term_id'] eq $cat_id">class="selected"</if>>{$vo.name}</a>
+							<notempty name="term_child">
+								<div class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" data-target="#collapse_{$key}">+</div>
+							</notempty>
+						</div>
+						<div id="collapse_{$key}" class="accordion-body collapse catecollapse">
+							<foreach name="term_child" item="vos">
+								<div class="accordion-inner">
+									<a href="{:leuu('portal/categorylist/index',array('cid'=>$vos['term_id']))}" <if condition="$vos['term_id'] eq $cat_id">class="selected"</if>>{$vos.name}</a>
+								</div>
+							</foreach>
+						</div>
+					</div>
+				</foreach>
+			</div>
+		</div>
+
+		<div class="userlist span9">
+			<php>
+				$termid= $cat_id;
+				$dusers = sp_sql_users_paged_bycatid($termid,"field:id,user_nicename,user_love,comment_count,avatar;where:user_type=3;limit:0,12;order:userlistorder asc,comment_count desc,last_login_time desc,create_time desc;",12);
+			</php>
+			<div class="tablist">
+            	<div class="cat_titbox">
+                    <div class="row">
+                    	<i class="fa fa-tags"></i>{$name}
+                    </div>
+                </div>
+				<div class="row">
+					<notempty name="dusers['users']">
+					<foreach name="dusers['users']" item="vos">
+						<div class="span3 libox"> 
+							<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+								<div class="pic">
+									<if condition="empty($vos['avatar'])">
+										<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+									<else/>
+										<img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+									</if>
+								</div>
+								<p class="realname">{$vos.user_nicename}</p>
+								<p class="haoping">( 评价数<em>{$vos.comment_count|default="0"}</em> )</p>
+							</a>
+						</div>
+					</foreach>
+					<else/>
+					<div class="span12"> 还没有注册该分类的会员信息哦！</div>
+					</notempty>
+				</div>	
+			</div>
+
+			<notempty name="dusers['page']">
+			<div class="pagination">
+				<ul>
+					{$dusers['page']}
+				</ul>
+			</div>
+			</notempty>
+		</div>
+	</div>
+</div>
+<tc_include file="Public:footer" />  
+<!-- JavaScript -->
+<tc_include file="Public:scripts" />
+<script>
+	$(".catecollapse").collapse('hide');
+	
+	$(".accordion-toggle").click(function(){
+		if($(this).hasClass("collapsed")){
+			$(this).text("-");
+			}else{
+				$(this).text("+");
+				}
+		});
+	$('.slidebox').css("min-height",$('.userlist').outerHeight());
+</script>
+</body>
+</html>

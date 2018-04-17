@@ -1,0 +1,258 @@
+<?php
+namespace Portal\Controller;
+
+use Common\Controller\HomebaseController;
+
+class ArticleController extends HomebaseController {
+	
+	protected $posts_model;
+	protected $term_relationships_model;
+	protected $terms_model;
+	protected $user_model;
+	
+	function _initialize() {
+		parent::_initialize();
+		$this->posts_model = D("Portal/Posts");
+		$this->terms_model = D("Portal/Terms");
+		$this->term_relationships_model = D("Portal/TermRelationships");
+		$this->user_model = D("Common/Users");
+	}
+    
+    //图集内页
+    public function index() {
+    	$article_id=I('get.id',0,'intval');
+    	$user_id=I('get.uid',0,'intval');
+    	
+    	$posts_model=M("Posts");
+    	
+    	$article=$posts_model
+    	->alias("a")
+    	->field('a.*,c.user_login,c.user_nicename,b.term_id')
+    	->join("__TERM_RELATIONSHIPS__ b ON a.id = b.posts_id")
+		->join("__USERS__ c ON a.post_author = c.id")
+		->where(array('a.id'=>$article_id))
+		->find();
+    	
+    	if(empty($article)){
+    	    header('HTTP/1.1 404 Not Found');
+    	    header('Status:404 Not Found');
+    	    if(sp_template_file_exists(MODULE_NAME."/404")){
+    	        $this->display(":404");
+    	    }
+    	    
+    	    return;
+    	}
+    	
+    	$users_model= M("Users");
+    	$username=$users_model->where(array('id'=>$user_id))->getField('user_nicename');
+    	
+    	$posts_model->where(array('id'=>$article_id))->setInc('post_hits');
+    	
+    	$article_date=$article['post_date'];
+    	
+    	$join = '__POSTS__ as b on a.posts_id =b.id';
+    	$join2= '__USERS__ as c on b.post_author = c.id';
+    	
+    	$term_relationships_model= M("TermRelationships");
+
+        $cat_id=$term_relationships_model->where(array("posts_id"=>$article_id))->getField("term_id",true);
+		$catids=implode(",",$cat_id);
+		$tag='ids:'.$catids.';field:term_id,name;';
+		$this->term=sp_get_terms($tag);
+    	
+    	$next=$term_relationships_model
+    	->alias("a")
+    	->join($join)->join($join2)
+    	->where(array('b.id'=>array('gt',$article_id),"post_date"=>array("egt",$article_date),"a.status"=>1,'post_author'=>$user_id,'post_type'=>1,'post_status'=>1))
+    	->order("post_date asc,b.id asc")
+    	->find();
+    	
+    	$prev=$term_relationships_model
+    	->alias("a")
+    	->join($join)->join($join2)
+    	->where(array('b.id'=>array('lt',$article_id),"post_date"=>array("elt",$article_date),"a.status"=>1,'post_author'=>$user_id,'post_type'=>1,'post_status'=>1))
+    	->order("post_date desc,b.id desc")
+    	->find();
+    	
+    	$this->assign("next",$next);
+    	$this->assign("prev",$prev);
+    	
+    	$smeta=json_decode($article['smeta'],true);
+    	$content_data=sp_content_page($article['post_content']);
+    	$article['post_content']=$content_data['content'];
+    	
+    	$this->assign("page",$content_data['page']);
+    	$this->assign($article);
+    	$this->assign("smeta",$smeta);
+    	$this->assign("username",$username);
+    	$this->assign("article_id",$article_id);
+        $this->assign("user_id",$user_id);
+    	
+    	$tplname=$term["one_tpl"];
+    	$tplname=empty($smeta['template'])?$tplname:$smeta['template'];
+    	$tplname=sp_get_apphome_tpl($tplname, "article");
+    	
+    	$this->display(":$tplname");
+    }
+    
+    // 图集点赞
+    public function do_like(){
+    	$this->check_login();
+    	
+    	$id = I('get.id',0,'intval');//posts表中id
+    	
+    	$posts_model=M("Posts");
+    	
+    	$can_like=sp_check_user_action("posts$id",1);
+    	
+    	if($can_like){
+    		$posts_model->save(array("id"=>$id,"post_like"=>array("exp","post_like+1")));
+    		$this->success("赞好啦！");
+    	}else{
+    		$this->error("您已赞过啦！");
+    	}
+    }
+    
+    // 前台用户添加图集
+    public function add(){
+        $this->check_login();
+        $this->_getTermTree();
+        $this->display();
+    }
+    
+    // 前台用户添加图集提交
+    public function add_post(){
+        if(IS_POST){
+            $this->check_login();
+
+            if(empty($_POST['term'])){
+                $this->error("请至少选择一个分类！");
+            }
+            $posts_model=M('Posts');
+            $term_relationships_model=M('TermRelationships');
+            
+			if(!empty($_POST['photos_alt']) && !empty($_POST['photos_url'])){
+				foreach ($_POST['photos_url'] as $key=>$url){
+					$photourl=sp_asset_relative_url($url);
+					$_POST['smeta']['photo'][]=array("url"=>$photourl,"alt"=>$_POST['photos_alt'][$key]);
+				}
+			}
+            $_POST['smeta']['thumb'] = sp_asset_relative_url($_POST['smeta']['thumb']);
+            
+            $_POST['post']['post_date']=date("Y-m-d H:i:s",time());
+            $_POST['post']['post_modified']=date("Y-m-d H:i:s",time());
+            $_POST['post']['post_author']=sp_get_current_userid();
+            $article=I("post.post");
+            $article['smeta']=json_encode($_POST['smeta']);
+            $article['post_content']=safe_html(htmlspecialchars_decode($article['post_content']));
+            if ($posts_model->field('post_type,post_date,post_author,post_content,post_title,post_modified,smeta')->create($article)!==false) {
+                $result=$posts_model->add();
+                if ($result) {
+                    foreach ($_POST['term'] as $mterm_id){
+						$result=$term_relationships_model->add(array("term_id"=>intval($mterm_id),"posts_id"=>$result));
+					}
+                        $this->success("图集添加成功！");
+                
+                } else {
+                    $this->error("图集添加失败！");
+                }
+            }else{
+                $this->error($posts_model->getError());
+            }
+            
+            
+        }
+    
+    }
+    
+    // 前台用户图集编辑
+    public function edit(){
+        $this->check_login();
+        $id=I("get.id",0,'intval');
+        $terms_model=M('Terms');
+        $posts_model=M('Posts');
+        
+        $term_relationship = M('TermRelationships')->where(array("posts_id"=>$id,"status"=>1))->getField("term_id",true);
+		$this->_getTermTree($term_relationship);
+        $post=$posts_model->where(array('id'=>$id,'post_author'=>sp_get_current_userid()))->find();
+        if(!empty($post)){
+            $this->assign("post",$post);
+            $this->assign("smeta",json_decode($post['smeta'],true));
+            $this->display();
+        }else{
+            $this->error('您编辑的图集不存在！');
+        }
+        
+    }
+    
+    // 前台用户图集编辑提交
+    public function edit_post(){
+        if(IS_POST){
+            $this->check_login();
+
+            $posts_model=M('Posts');
+            
+			if(empty($_POST['term'])){
+				$this->error("请至少选择一个分类！");
+			}
+			$post_id=intval($_POST['post']['id']);
+			
+			$this->term_relationships_model->where(array("posts_id"=>$post_id,"term_id"=>array("not in",implode(",", $_POST['term']))))->delete();
+			foreach ($_POST['term'] as $mterm_id){
+				$find_term_relationship=$this->term_relationships_model->where(array("posts_id"=>$post_id,"term_id"=>$mterm_id))->count();
+				if(empty($find_term_relationship)){
+					$this->term_relationships_model->add(array("term_id"=>intval($mterm_id),"posts_id"=>$post_id));
+				}else{
+					$this->term_relationships_model->where(array("posts_id"=>$post_id,"term_id"=>$mterm_id))->save(array("status"=>1));
+				}
+			}
+				
+			if(!empty($_POST['photos_alt']) && !empty($_POST['photos_url'])){
+				foreach ($_POST['photos_url'] as $key=>$url){
+					$photourl=sp_asset_relative_url($url);
+					$_POST['smeta']['photo'][]=array("url"=>$photourl,"alt"=>$_POST['photos_alt'][$key]);
+				}
+			}
+            $_POST['smeta']['thumb'] = sp_asset_relative_url($_POST['smeta']['thumb']);
+            $_POST['post']['post_modified']=date("Y-m-d H:i:s",time());
+            $article=I("post.post");
+            $article['smeta']=json_encode($_POST['smeta']);
+            $article['post_content']=safe_html(htmlspecialchars_decode($article['post_content']));
+            if ($posts_model->field('id,post_type,post_author,post_content,post_title,post_modified,smeta')->create($article)!==false) {
+                $result=$posts_model->where(array('id'=>$article['id'],'post_author'=>sp_get_current_userid()))->save($article);
+                if ($result!==false) {
+                    $this->success("图集编辑成功！");
+                } else {
+                    $this->error("图集编辑失败！");
+                }
+            }else{
+                $this->error($posts_model->getError());
+            }
+            
+        }
+    }
+    
+    // 获取图集分类树结构
+   private function _getTermTree($term=array()){
+		$result = $this->terms_model->order(array("listorder"=>"asc"))->select();
+		
+		$tree = new \Tree();
+		$tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+		$tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+		foreach ($result as $r) {
+			$r['str_manage'] = '<a href="' . U("AdminTerm/add", array("parent" => $r['term_id'])) . '">添加子类</a> | <a href="' . U("AdminTerm/edit", array("id" => $r['term_id'])) . '">修改</a> | <a class="js-ajax-delete" href="' . U("AdminTerm/delete", array("id" => $r['term_id'])) . '">删除</a> ';
+			$r['visit'] = "<a href='#'>访问</a>";
+			$r['taxonomys'] = $this->taxonomys[$r['taxonomy']];
+			$r['id']=$r['term_id'];
+			$r['parentid']=$r['parent'];
+			$r['selected']=in_array($r['term_id'], $term)?"selected":"";
+			$r['checked'] =in_array($r['term_id'], $term)?"checked":"";
+			$array[] = $r;
+		}
+		
+		$tree->init($array);
+		$str="<option value='\$id' \$selected>\$spacer\$name</option>";
+		$taxonomys = $tree->get_tree(0, $str);
+		$this->assign("taxonomys", $taxonomys);
+	}
+}

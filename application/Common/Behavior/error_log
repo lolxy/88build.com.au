@@ -1,0 +1,3 @@
+[26-Jun-2017 16:31:38 UTC] PHP Fatal error:  Class 'Think\Behavior' not found in /home/eleccoma/www.88build.com.au/application/Common/Behavior/InitHookBehavior.class.php on line 17
+[26-Jun-2017 18:23:14 UTC] PHP Fatal error:  Class 'Think\Behavior' not found in /home/eleccoma/www.88build.com.au/application/Common/Behavior/UrldecodeGetBehavior.class.php on line 15
+[26-Jun-2017 22:50:03 UTC] PHP Fatal error:  Class 'Think\Behavior' not found in /home/eleccoma/www.88build.com.au/application/Common/Behavior/TmplStripSpaceBehavior.class.php on line 16

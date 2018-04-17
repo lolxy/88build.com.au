@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="88BUILD">
+<tc_include file="Public:head" />
+<style>
+.span9{background-color: #fff;margin-bottom: 20px;border: 1px solid #eeeeee;box-sizing:border-box}
+.tabs .nav-tabs{width: 100%;border-bottom: 1px solid #eeeeee;height: 45px;overflow: hidden;}
+.nav-tabs a{display:inline-block;width: 150px;height: 45px;line-height: 45px;padding-left: 15px;color:#333333;font-size: 15px;text-decoration:none}
+.tab-content{padding: 20px;box-sizing:border-box}
+</style>
+</head>
+<body class="body-white" id="top">
+	<tc_include file="Public:nav" />
+
+		<div class="container tc-main">
+                <div class="row">
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                    <div class="span9">
+                           <div class="tabs">
+                               <div class="nav-tabs"><a href="#one" data-toggle="tab"><i class="fa fa-exchange"></i> 绑定账号</a></div>
+                               <div class="tab-content">
+                                   <div class="tab-pane active" id="one">
+	                                   <if condition="!empty($oauths['qq'])">
+	                                   		<button class="btn"><i class="fa fa-qq"></i> 已绑定腾讯QQ账号</button>
+	                                   <else/>
+	                                   		<a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'qq'))}"><i class="fa fa-qq"></i> 绑定腾讯QQ账号</a>
+	                                   </if>
+	                                   <if condition="!empty($oauths['sina'])">
+	                                   		<button class="btn"><i class="fa fa-weibo"></i> 已绑定新浪微博账号</button>
+	                                   <else/>
+	                                   		<a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'sina'))}"><i class="fa fa-weibo"></i> 绑定新浪微博账号</a>
+	                                   </if>
+                                       <if condition="!empty($oauths['weixin'])">
+	                                   		<button class="btn"><i class="fa fa-weixin"></i> 已绑定微信账号</button>
+	                                   <else/>
+	                                   		<a class="btn btn-primary" href="{:U('api/oauth/bang',array('type'=>'weixin'))}"><i class="fa fa-weixin"></i> 绑定微信账号</a>
+	                                   </if>
+                                   </div>
+                               </div>							
+                           </div>
+                    </div>
+                </div>
+
+		
+
+	</div>
+	<!-- /container -->
+	<tc_include file="Public:scripts" />
+</body>
+</html>

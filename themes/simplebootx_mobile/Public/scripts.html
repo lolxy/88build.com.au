@@ -1,0 +1,132 @@
+<script type="text/javascript">
+//全局变量
+var GV = {
+    ROOT: "__ROOT__/",
+    WEB_ROOT: "__WEB_ROOT__/",
+    JS_ROOT: "public/js/"
+};
+</script>
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="__PUBLIC__/js/jquery.js"></script>
+   <script src="__PUBLIC__/js/wind.js"></script>
+   <script src="__TMPL__Public/assets/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+   <script src="__PUBLIC__/js/frontend.js"></script>
+   <script src="__PUBLIC__/js/jquery.raty.js"></script>
+	<script>
+	$('#star').raty({
+		score: function() {
+			return $(this).attr('data-score');
+		}
+	});
+	</script>
+<script>
+$(function(){
+	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+	
+	$("#main-menu li.dropdown").hover(function(){
+		$(this).addClass("open");
+	},function(){
+		$(this).removeClass("open");
+	});
+	
+	$('.loginbox').click(function(){
+		$('#mainmenu').slideToggle();
+		});
+		
+	$('body').on('click', '#mainmenu,.loginbox', function (e) { 
+			e.stopPropagation(); 
+	});
+	
+	$('body').on('click',function(){
+		$('#mainmenu').slideUp();
+		})
+	
+	$.post("{:U('user/index/is_login')}",{},function(data){
+		if(data.status==1){
+			/*if(data.user.avatar){
+				$("#main-menu-user .headicon").attr("src",data.user.avatar.indexOf("http")==0?data.user.avatar:"{:sp_get_image_url('[AVATAR]','!avatar')}".replace('[AVATAR]',data.user.avatar));
+			}
+			
+			$("#main-menu-user .user-nicename").text(data.user.user_nicename!=""?data.user.user_nicename:data.user.user_login);*/
+			$(".loginbox").hide();
+			$(".loginlist").hide();
+			$(".userinfo").show();
+			
+		}
+		if(data.status==0){
+			$(".loginbox").show();
+			$(".loginlist").show();
+			$(".userinfo").hide();
+		}
+		
+		/* $.post("{:U('user/notification/getLastNotifications')}",{},function(data){
+			$(".nav .notifactions .count").text(data.list.length);
+		}); */
+		
+	});	
+	;(function($){
+		$.fn.totop=function(opt){
+			var scrolling=false;
+			return this.each(function(){
+				var $this=$(this);
+				$(window).scroll(function(){
+					if(!scrolling){
+						var sd=$(window).scrollTop();
+						if(sd>100){
+							$this.fadeIn();
+						}else{
+							$this.fadeOut();
+						}
+					}
+				});
+				
+				$this.click(function(){
+					scrolling=true;
+					$('html, body').animate({
+						scrollTop : 0
+					}, 500,function(){
+						scrolling=false;
+						$this.fadeOut();
+					});
+				});
+			});
+		};
+	})(jQuery); 
+	
+	$("#backtotop").totop();
+	
+	$('#is_anony').click(function(){
+		var checked = $(this).prop("checked");
+		if(checked){
+			$(this).val("0");
+		}else{
+			$(this).val("1");
+		}
+	});
+});
+
+$(".main-menu a").each(function(){
+    if ($(this)[0].href == String(window.location) && $(this).attr('href')!="") {
+    	$(this).parents("li").addClass("current-menu-item");
+	}
+    });
+
+$('.menutoggle').click(function(){
+	if($(this).hasClass('insides')){
+		$(this).removeClass('insides');
+		$('.leftnavbox').width("28%");
+		$('.userlist').css("marginLeft","28%");
+		$(this).find('.fa').removeClass('fa-indent').addClass('fa-outdent');
+	}else{
+		$(this).addClass('insides');
+		$('.leftnavbox').width("0");
+		$('.userlist').css("marginLeft","0");
+		$(this).find('.fa').removeClass('fa-outdent').addClass('fa-indent');
+	}
+});
+
+$('.backup').click(function(){
+	window.history.back();
+});
+</script>
+

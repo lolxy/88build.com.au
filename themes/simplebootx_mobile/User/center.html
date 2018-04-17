@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="88BUILD">
+<tc_include file="Public:head" />
+<style>
+body{background-color:#f8f8f8;}
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+.list-group-item{border: 1px solid #eeeeee;border-left: none;border-right: none;padding: 15px;}
+.cpicbox{width: 100%;height: 120px;background-color: #CB6598;position:relative;overflow: hidden;}
+.cpicbox img{width: 60px;height: 60px;border-radius:50%;position:absolute;top: 30px;left: 20px;}
+.u-info{margin-left: 100px;}
+.cpicbox h2{height: 35px;line-height: 35px;font-size: 20px;color:#ffffff;margin: 0;margin-top: 15px;}
+.cpicbox p{font-size: 14px;color:#f9f9f9;line-height: 24px;margin: 0;}
+.navbox{margin-top: 10px;}
+</style>
+</head>
+<body>
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>个人中心</h2>
+</div>
+<div class="usercenter">
+      <div class="cpicbox">
+          <a href="{:U('profile/avatar')}">
+            <if condition="empty($avatar)">
+            <img src="__TMPL__Public/assets/images/headicon_128.png" class="headicon"/>
+            <else/>
+            <img src="{:sp_get_user_avatar_url($avatar)}" class="headicon"/>
+            </if>
+          </a>
+          <div class="u-info">
+          	<h2>{$user_nicename|default='未填写'}</h2>
+            <php>
+			$age = empty($birthday)?"未知":getAge($birthday);
+			$sexs=array("0"=>"保密","1"=>"男","2"=>"女");</php>
+			<p>({$sexs[$sex]} <b>{$age}</b>岁)</em></p>
+            <p>手机：{$mobile|default='未填写'}</p>
+          </div>
+      </div>
+      
+      <div class="navbox">
+      	<tc_include file="Public:usernav"/>
+      </div>
+	</div>
+	<tc_include file="Public:subnav" />
+	<tc_include file="Public:scripts" />
+</body>
+</html>

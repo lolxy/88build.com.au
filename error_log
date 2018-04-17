@@ -1,0 +1,102 @@
+[04-Jul-2017 01:15:40 PRC] PHP Fatal error:  Call to undefined function expload() in /home/eleccoma/www.88build.com.au/data/runtime/Cache/User/9a5f0664ec5b59a80750756b2a744e2a.php on line 203
+[04-Jul-2017 01:16:43 PRC] PHP Fatal error:  Call to undefined function expload() in /home/eleccoma/www.88build.com.au/data/runtime/Cache/User/9a5f0664ec5b59a80750756b2a744e2a.php on line 203
+[04-Jul-2017 01:16:46 PRC] PHP Fatal error:  Call to undefined function expload() in /home/eleccoma/www.88build.com.au/data/runtime/Cache/User/9a5f0664ec5b59a80750756b2a744e2a.php on line 203
+[04-Jul-2017 01:17:12 PRC] PHP Fatal error:  Call to undefined function expload() in /home/eleccoma/www.88build.com.au/data/runtime/Cache/User/9a5f0664ec5b59a80750756b2a744e2a.php on line 203
+[06-Jul-2017 22:26:41 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:44 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:47 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:48 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:49 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:49 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:49 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:49 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:50 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:51 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:52 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:52 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:52 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:26:56 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:01 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:06 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:09 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:10 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:10 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:10 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:47:10 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:46 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:46 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:47 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:47 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:47 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:48 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:48 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 22:54:48 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:00:34 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:29:01 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:29:02 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:29:03 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:29:03 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[06-Jul-2017 23:29:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[07-Jul-2017 02:21:57 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[07-Jul-2017 02:21:57 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[07-Jul-2017 02:21:58 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 234
+[07-Jul-2017 02:33:23 PRC] PHP Fatal error:  Cannot use object of type Common\Model\UsersModel as array in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 181
+[07-Jul-2017 02:33:30 PRC] PHP Fatal error:  Cannot use object of type Common\Model\UsersModel as array in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 181
+[09-Jul-2017 20:25:46 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 28
+[09-Jul-2017 20:25:50 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 28
+[09-Jul-2017 20:27:42 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 28
+[09-Jul-2017 20:27:46 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 28
+[09-Jul-2017 20:28:41 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 28
+[09-Jul-2017 20:29:24 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 27
+[09-Jul-2017 20:30:16 PRC] PHP Fatal error:  Class 'Portal\Controller\Page' not found in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 27
+[09-Jul-2017 20:34:18 PRC] PHP Fatal error:  Call to undefined function Think\Page() in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 26
+[09-Jul-2017 20:34:21 PRC] PHP Fatal error:  Call to undefined function Think\Page() in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 26
+[09-Jul-2017 20:34:29 PRC] PHP Fatal error:  Call to undefined function Think\Page() in /home/eleccoma/www.88build.com.au/application/Portal/Controller/SearchController.class.php on line 26
+[10-Aug-2017 10:56:02 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:11 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:22 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:33 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:36 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:36 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:36 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:36 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:37 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:37 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:38 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:38 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:38 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:42 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:43 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:56:43 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 10:57:43 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:35:18 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:39:31 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:42:47 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:48 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:52 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:53 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:53 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:53 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:53 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:54 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 11:56:54 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 12:00:19 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 12:41:25 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 12:50:05 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 284
+[10-Aug-2017 12:52:32 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 285
+[10-Aug-2017 12:52:33 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 285
+[10-Aug-2017 12:53:59 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 285
+[10-Aug-2017 12:55:18 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 285
+[10-Aug-2017 12:57:09 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 285
+[10-Aug-2017 13:02:51 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 286
+[10-Aug-2017 13:05:34 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 277
+[10-Aug-2017 13:07:21 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 277
+[10-Aug-2017 13:08:01 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 278
+[10-Aug-2017 13:14:38 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 277
+[10-Aug-2017 13:17:45 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 277
+[10-Aug-2017 13:23:55 PRC] PHP Fatal error:  Call to a member function where() on boolean in /home/eleccoma/www.88build.com.au/application/Admin/Controller/SettingController.class.php on line 277

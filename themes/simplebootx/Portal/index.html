@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>{$site_seo_title} {$site_name}</title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<tc_include file="Public:head" />
+		<link href="__PUBLIC__/css/swiper.min.css" rel="stylesheet">
+	</head>
+<body class="body-white">
+<tc_include file="Public:nav" />
+
+<php>
+$home_slides=sp_getslide("index_slide");
+$home_slides=empty($home_slides)?$default_home_slides:$home_slides;
+</php>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <foreach name="home_slides" item="vo">
+			<div class="swiper-slide">
+				<a href="{$vo.slide_url}"><img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt=""></a>
+			</div>
+        </foreach>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+ <div style="text-align:right;height:30px;line-height:30px;margin:15px auto;font-weight:600;width:1200px;">网站总访问量 : <span>{$hits_inedx}</span></div>
+
+<div class="container wrapper">
+<div class="container">
+	<php>
+		$terms=sp_get_child_terms(0); //获取子分类信息
+	</php>
+	<div class="row">
+	<ul class="unstyled termlist">
+	<foreach name="terms" item="vo" key="i">
+		<li class="span2"><a href="{:leuu('portal/categorylist/index',array('cid'=>$vo['term_id']))}" <if condition='$i eq 0'>class="on"</if>>{$vo.name}</a></li>
+	</foreach>
+	</ul>
+	</div>
+	<!--<div class="tabbox">
+	<foreach name="terms" item="vo" key="k">
+	<php>
+	$where['user_type'] = array('eq',3);
+    $dusers = sp_sql_users_bycatid($vo['term_id'],"field:id,user_nicename,user_love,avatar;limit:0,20;order:create_time desc;",$where);
+	</php>
+		<div class="tablist" <if condition="$k eq 0">style="display:block;"</if>>
+		<div class="row">
+		<notempty name="dusers">
+		<foreach name="dusers" item="vos">
+			<div class="span2 libox"> 
+				<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+					<div class="pic">
+						<if condition="empty($vos['avatar'])">
+							<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+						<else/>
+							<img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+						</if>
+					</div>
+					<p class="realname">{$vos.user_nicename}</p>
+					<p class="haoping">( 好评数：<em>{$vos.user_love|default=0}</em> )</p>
+				</a>
+			</div>
+		</foreach>
+		<else/>
+		<div class="span12"> 还没有注册该分类的会员信息哦！</div>
+		</notempty>
+		</div>	
+		</div>
+	</foreach>
+	</div>-->
+</div>
+
+<div class="container">
+	<div class="s-tit">金牌师傅<!--<span>Gold medal master</span>--></div>
+	<div class="row">
+	<php>
+	$where['user_type'] = array('eq',3);
+	$where['recommend'] = array('eq',1);
+    $last_users = sp_get_users("field:*;limit:0,20;order:userlistorder asc,last_login_time desc,create_time desc;",$where);
+	</php>
+	<foreach name="last_users" item="vos">
+		<div class="span2 libox"> 
+				<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+					<div class="pic">
+						<if condition="empty($vos['avatar'])">
+							<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+						<else/>
+							<img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+						</if>
+					</div>
+					<p class="realname">{$vos.user_nicename}</p>
+				</a>
+			</div>
+	</foreach>	
+	</div>
+</div>
+
+<!--<div class="container">
+	<div class="s-tit">最新加入会员<span>Last Users</span></div>
+	<div class="row">
+	<php>
+	$where['user_type'] = array('eq',2);
+    $last_users = sp_get_users("field:*;limit:0,20;order:create_time desc;",$where);
+	</php>
+	<foreach name="last_users" item="vos">
+		<div class="span2 libox"> 
+				<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+					<div class="pic">
+						<if condition="empty($vos['avatar'])">
+							<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+						<else/>
+							<img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+						</if>
+					</div>
+					<p class="realname">{$vos.user_nicename}</p>
+				</a>
+			</div>
+	</foreach>	
+	</div>
+</div>-->
+
+</div>
+
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script>        
+  var mySwiper = new Swiper ('.swiper-container', {
+    loop: true,
+    // 如果需要分页器
+	paginationClickable :true,
+	autoHeight: true, //高度随内容变化
+    pagination: '.swiper-pagination',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+  })   
+
+  /*$('.termlist li').click(function(){
+	  var index = $(this).index();
+	  $(this).addClass('on').siblings().removeClass('on');
+	  $('.tabbox .tablist').hide().eq(index).show();
+  });  */   
+  </script>
+{:hook('footer_end')}
+</body>
+</html>

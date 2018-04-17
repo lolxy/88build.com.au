@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$user_nicename}-{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="88BUILD">
+<tc_include file="Public:head" />
+<link href="__PUBLIC__/css/swiper.min.css" rel="stylesheet">
+<style>
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+.userbox{position:relative}
+.jinpaishifu{position:absolute;height: 30px;line-height: 30px;font-weight: bold;color:#ee3322;top:-7px;left: 10px;font-size: 18px;}
+</style>
+</head>
+<body class="body-white" id="top">
+	<tc_include file="Public:nav" />
+<div class="infowrapper container">
+<php>
+$home_slides=sp_getslide("user_index_slide");
+</php>
+<notempty name="home_slides">
+<div class="swiper-container container">
+    <div class="swiper-wrapper">
+        <foreach name="home_slides" item="vo" key="k">
+			<if condition="$k lt 6">
+			<div class="swiper-slide">
+				<a href="{$vo.slide_url}"><img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt=""></a>
+			</div>
+			</if>
+        </foreach>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+</notempty>
+
+<notempty name="term">
+<div class="category maininfo">
+   <div class="pull-left mr15">
+   		<a href="/categorylist.html" class="btn btn-default">返回列表</a>
+   </div>
+   <div class="pull-left">
+        <php>
+            $age = empty($users['birthday'])?"未知":getAge($users['birthday']);
+        </php>
+        <span class="realname">{$user_nicename|default='未填写'}</span><em>(
+        <php>$sexs=array("0"=>"保密","1"=>"男","2"=>"女");</php>
+        {$sexs[$sex]} <b>{$age}</b>岁)</em>
+   </div>
+   <div class="pull-right">
+   	<if condition="$user_type eq 3">
+        <div class="user_type">
+        装修师傅
+        </div>
+    </if>
+    <if condition="$user_type eq 2">
+        <div class="user_type">
+        普通会员
+        </div>
+    </if>
+   </div>   
+</div>
+</notempty>
+<div class="wrapper-box">
+	<div class="box">
+		<div class="picbox">
+			<if condition="empty($avatar)">
+				<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+				<else/>
+				<img src="{:sp_get_user_avatar_url($avatar)}" class="img-responsive"/>
+			</if>
+		</div>
+		<div class="userbox">
+			<if condition="$user_type eq 3">
+            <if condition="$recommend eq 1">
+            <div class="jinpaishifu">[金牌师傅]</div>
+            </if>
+			<div class="tags">
+				<span class="haopingshu">好评数：<em>{$user_love}</em></span>
+				<span class="hits">浏览数：<em>{$user_hits+$zdy_hits}</em></span>
+				<span class="avgbox">综合评价：<em>{$avgs}</em></span>
+			</div>
+			</if>
+			<p><span>{$mobile|default='未填写'}</span><em class="contact_em">(联系我时，请告知来自于墨尔本88建筑装修网，未经许可，请勿转载！)</em></p>
+			<dl>
+				<dt>
+					从业年限：
+				</dt>
+				<dd>
+					{$work_time|default='未填写'}
+				</dd>
+			</dl>
+            <dl>
+            	<dt>
+                	所属分类：
+                </dt>
+                <dd>
+                    <foreach name="term" item="vo" key="k">
+                        <if condition="$k gt 0"> -</if>
+                        <span><a href="{:leuu('portal/categorylist/index',array('cid'=>$vo['term_id']))}" target="_blank">{$vo.name}</a></span>
+                    </foreach>
+                </dd>
+            </dl>
+			<!--<dl>
+				<dt>
+					工作内容：
+				</dt>
+				<dd>
+					{$work_content|default='未填写'}
+				</dd>
+			</dl>-->
+			<dl>
+				<dt>
+					服务区域：
+				</dt>
+				<dd>
+                <php>
+                </php>
+					{$services}<notempty name="service_area">,{$service_area}</notempty>
+				</dd>
+			</dl>
+		</div>
+	</div>
+    
+    <div class="baseinfo">
+		<h2><i class="fa fa-navicon"></i> 工作内容</h2>
+		<div class="maincontent">
+			<p>{$work_content|default='未填写'}</p>
+		</div>
+	</div>
+
+	<div class="baseinfo">
+		<h2><i class="fa fa-list-alt"></i> 个人简介</h2>
+		<div class="maincontent">
+			<p>{$signature|default='未填写'}</p>
+		</div>
+	</div>
+
+	<if condition="$user_type neq 2">
+		<php>
+			$where['post_author']=array("eq",$id);
+			$lists = sp_sql_posts("field:posts_id,smeta,post_title,post_hits;order:post_date DESC;where:post_type=1;limit:0,8;",$where);
+		</php>
+	<div class="baseinfo">
+		<h2><i class="fa fa-tags"></i> 工程图集</h2>
+		<div class="maincontent">
+			<div class="listbox">
+				<notempty name="lists">
+                <ul>
+					<volist name="lists" id="vo">
+						<php>
+							$smeta=json_decode($vo['smeta'], true);
+                            $length=count($smeta['photo']);
+						</php>
+						<li>
+							<div class="libox">
+								<div class="item-image">
+									<a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$id))}">
+								<if condition="!empty($smeta['thumb'])">
+									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive" alt="{$vo.post_title}">
+								<else/>
+									<img src="__PUBLIC__/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}">
+								</if>
+									</a>
+								</div>
+								<div class="titbox">
+									<a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$id))}" class="title" style="margin-right:85px;">{$vo.post_title}</a>
+									<a href="javascript:;" class="viewhits"><i class="fa fa-eye"></i><span>{$vo.post_hits}</span></a>
+                                    <a href="javascript:;" style="position:absolute;top:0;right:40px;width:40px;text-align:center;line-height:40px;font-size:12px;"><span>{$length} 张</span></a>
+								</div>
+							</div>
+						</li>
+					</volist>
+				</ul>
+                <else/>
+                <span>您还没有发布工程图集</span>
+                </notempty>
+			</div>
+			<div class="more">
+				<a href="{:leuu('portal/list/index',array('id'=>$id))}" target="_blank">查看更多 >></a>
+			</div>
+		</div>
+	</div>
+    </if>
+    
+    <if condition="$user_type eq 3">
+	{:hook('comment',array(
+		'post_id'=>$userid,
+		'post_table'=>'users',
+        'post_title'=>$user_login,
+	))}
+	</if>
+</div>
+</div>
+	<!-- /container -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+	<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script>        
+  var mySwiper = new Swiper ('.swiper-container', {
+    loop: true,
+    // 如果需要分页器
+	paginationClickable :true,
+	autoHeight: true, //高度随内容变化
+    pagination: '.swiper-pagination',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+  })     
+  </script>
+</body>
+</html>

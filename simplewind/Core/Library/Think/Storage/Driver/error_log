@@ -1,0 +1,1 @@
+[26-Jun-2017 21:15:04 UTC] PHP Fatal error:  Class 'Think\Storage' not found in /home/eleccoma/www.88build.com.au/simplewind/Core/Library/Think/Storage/Driver/File.class.php on line 14

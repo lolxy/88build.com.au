@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$name} {$seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+    <tc_include file="Public:head" />
+</head>
+<body style="background-color:#fefefe;">
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>{$name}</h2>
+     <notempty name="term">
+     <div class="menutoggle">
+        <i class="fa fa-outdent"></i>
+     </div>
+     </notempty>
+</div>
+<div class="categorylist">
+	<notempty name="term">
+	<div class="leftnavbox">
+    	<foreach name="term" item="vo" key="k">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a href="{:leuu('portal/categorylist/index',array('cid'=>$vo['term_id']))}" <if condition="$vo['term_id'] eq $cat_id">class="selected"</if>>{$vo.name}</a>
+                </div>
+            </div>
+        </foreach>
+    </div>
+    </notempty>
+
+		<div class="userlist" <empty name="term">style="margin-left:0px;"</empty>>
+			<php>
+				$termid= $cat_id;
+				$dusers = sp_sql_users_paged_bycatid($termid,"field:id,user_nicename,user_love,comment_count,avatar;limit:0,20;where:user_type=3;order:userlistorder asc,comment_count desc,last_login_time desc,create_time desc;",20);
+			</php>
+			<div class="tablist">
+					<notempty name="dusers['users']">
+					<foreach name="dusers['users']" item="vos">
+						<div class="libox"> 
+							<a href="{:leuu('user/info/index',array('id'=>$vos['id']))}">
+								<div class="pic">
+									<if condition="empty($vos['avatar'])">
+										<img src="__TMPL__Public/assets/images/headicon_128.png" class="img-responsive"/>
+									<else/>
+										<img src="{:sp_get_user_avatar_url($vos['avatar'])}?t={:time()}" class="img-responsive"/>
+									</if>
+								</div>
+								<p class="realname">{$vos.user_nicename}</p>
+								<p class="haoping">( 评价数<em>{$vos.comment_count|default="0"}</em> )</p>
+							</a>
+						</div>
+					</foreach>
+					<else/>
+					<div class="nullinfo"> 还没有注册该分类的会员信息哦！</div>
+					</notempty>
+			</div>
+
+			<notempty name="dusers['page']">
+			<div class="pagination">
+				<ul>
+					{$dusers['page']}
+				</ul>
+			</div>
+			</notempty>
+		</div>
+</div> 
+<!-- JavaScript -->
+<tc_include file="Public:subnav" />
+<tc_include file="Public:scripts" />
+<script>
+	$(".collapse").collapse({
+		toggle:true
+	});
+
+	$('.slidebox').height($('.wrapper').height());
+</script>
+</body>
+</html>

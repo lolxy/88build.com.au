@@ -1,0 +1,40 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('ad/index')}">{:L('ADMIN_AD_INDEX')}</a></li>
+			<li><a href="{:U('ad/add')}">{:L('ADMIN_AD_ADD')}</a></li>
+			<li class="active"><a>编辑变量</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('ad/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">变量名称：</label>
+					<div class="controls">
+						<input type="text" name="ad_name" value="{$ad_name}" readonly/><span class="form-required">*</span>
+						<input type="hidden" name="ad_id" value="{$ad_id}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">变量内容：</label>
+					<div class="controls">
+						<textarea name="ad_content" rows="5" cols="57">{$ad_content}</textarea>
+					</div>
+				</div>
+                <div class="control-group">
+					<label class="control-label">变量说明：</label>
+					<div class="controls">
+						<input type="text" name="ad_description" value="{$ad_description}">
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$name} {$seo_title} {$site_name}</title>
+<meta name="keywords" content="{$seo_keywords}" />
+<meta name="description" content="{$seo_description}">
+<tc_include file="Public:head" />
+<style>
+body{background-color:#f8f8f8;padding-bottom: 0;}
+#container{background-color:#ffffff;border-top: 1px solid #eeeeee;border-bottom: 1px solid #eeeeee;padding-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="navbarheader navbar-fixed-top">
+     <a href="javascript:void(0);" class="backup"><i class="fa fa-angle-left"></i></a>
+     <h2>工程案例</h2>
+</div>
+	<div class="container">
+		<div class="list-title"><span>{$name}</span>的全部工程案例</div>
+		<php> 
+			$lists = sp_sql_posts_paged("field:posts_id,smeta,post_title,post_hits;order:istop DESC,recommended DESC,post_date DESC;where:post_author=$user_id and post_type=1",20);</php>
+			<empty name="lists['posts']">
+				<div class="emptybox">该师傅还没有发布工程案例！</div>
+			<else/>
+		<div id="container">
+			<volist name="lists['posts']" id="vo">
+			<php>
+			$smeta=json_decode($vo['smeta'], true);
+            $length=count($smeta['photo']);
+			</php>
+
+			<div class="item">
+				<div class="tc-gridbox">
+					<div class="tc-libox">
+						<div class="item-image">
+							<a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$user_id))}">
+						<if condition="!empty($smeta['thumb'])">
+							<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive" alt="{$vo.post_title}">
+						<else/>
+							<img src="__PUBLIC__/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}">
+						</if>
+							</a>
+						</div>
+						<div class="titbox">
+                        <a href="{:leuu('portal/article/index',array('id'=>$vo['posts_id'],'uid'=>$user_id))}">
+                            <div class="title" style="margin-right:85px;">{$vo.post_title}</div>
+							<div class="viewhits"><i class="fa fa-eye"></i><span>{$vo.post_hits}</span></div>
+                            <div style="position:absolute;top:0;right:40px;width:40px;text-align:center;line-height:40px;font-size:12px;"><span>{$length} 张</span></div>
+                            </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</volist>
+		</div>
+		<!-- <div class="pagination"><ul>{$lists['page']}</ul></div> -->
+		<div class="js-infinite-scroll-loading text-center" style="display: none;">正在加载...</div>
+		<div id="nextpage"></div>
+		</empty>
+	</div>
+
+	<!-- JavaScript -->
+	<tc_include file="Public:scripts" />
+	<script src="__TMPL__Public/assets/js/imagesloaded.pkgd.min.js"></script>
+	<script src="__TMPL__Public/assets/js/masonry.pkgd.min.js"></script>
+	<script src="__TMPL__Public/assets/js/jquery.infiniteScroll.js"></script>
+	<script>
+		
+		$(function(){
+			var $container= $('#container').masonry({
+				itemSelector : '.item'
+			});
+			
+			$container.imagesLoaded().progress(function (imgLoad, image) {
+				var msnry = $container.data('masonry');
+				var itemSelector = msnry.options.itemSelector;
+		        var $item = $(image.img).parents(itemSelector);
+		        $('.tc-gridbox',$item).css('opacity',1);
+		        msnry.layout();
+		    });
+			
+			$('#nextpage').infiniteScroll({
+				loading:'.js-infinite-scroll-loading',
+				total_pages:{$lists['total_pages']},
+				success:function(content){
+					var $items=$(content).find('#container .item');
+					if($items.length>0){
+						//$('.tc-gridbox',$items).css('opacity',1);
+						$container.append( $items )
+					    // add and layout newly prepended items
+					    .masonry( 'appended', $items );
+						$items.imagesLoaded().progress(function (imgLoad, image) {
+							var msnry = $container.data('masonry');
+							var itemSelector = msnry.options.itemSelector;
+					        var $item = $(image.img).parents(itemSelector);
+					        $('.tc-gridbox',$item).css('opacity',1);
+					        msnry.layout();
+					    });
+					}
+				},
+				finish:function(){
+					
+				}
+			});
+		});
+		
+		
+		
+		
+	</script>
+</body>
+</html>
